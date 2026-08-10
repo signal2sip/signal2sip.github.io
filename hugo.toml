@@ -1,0 +1,49 @@
+baseURL = 'https://signal2sip.github.io/'
+title = 'signal2sip'
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = true
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 10
+
+[languages]
+  [languages.en]
+    languageName = 'English'
+    weight = 1
+    contentDir = 'content/en'
+  [languages.uk]
+    languageName = 'Українська'
+    weight = 2
+    contentDir = 'content/uk'
+  [languages.ru]
+    languageName = 'Русский'
+    weight = 3
+    contentDir = 'content/ru'
+  [languages.pl]
+    languageName = 'Polski'
+    weight = 4
+    contentDir = 'content/pl'
+  [languages.de]
+    languageName = 'Deutsch'
+    weight = 5
+    contentDir = 'content/de'
+  [languages.fr]
+    languageName = 'Français'
+    weight = 6
+    contentDir = 'content/fr'
+  [languages.it]
+    languageName = 'Italiano'
+    weight = 7
+    contentDir = 'content/it'
+  [languages.es]
+    languageName = 'Español'
+    weight = 8
+    contentDir = 'content/es'
+  [languages.pt]
+    languageName = 'Português'
+    weight = 9
+    contentDir = 'content/pt'
+
+[params]
+  github = 'https://github.com/signal2sip/signal2sip'

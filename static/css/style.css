@@ -1,0 +1,116 @@
+:root {
+  --bg: #0f1218;
+  --bg-alt: #171b22;
+  --border: #2b323d;
+  --fg: #dadde3;
+  --dim: #7e8799;
+  --accent: #e8a33d;
+  --good: #5cc9a7;
+  --max-width: 46rem;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f7f5;
+    --bg-alt: #ffffff;
+    --border: #e0ddd6;
+    --fg: #1c2027;
+    --dim: #6a6f78;
+    --accent: #b8721f;
+    --good: #1f8f6d;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { color-scheme: dark light; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: .9rem;
+  padding-bottom: .9rem;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: .01em;
+  color: var(--fg);
+}
+
+.langswitch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 .85rem;
+  font-size: .85rem;
+}
+
+.langswitch a { color: var(--dim); }
+.langswitch a.current { color: var(--accent); font-weight: 600; }
+
+.content {
+  padding: 3rem 1.25rem 2.5rem;
+}
+
+.content h1 {
+  margin: 0 0 .3rem;
+  font-size: 2.1rem;
+  letter-spacing: -.01em;
+}
+
+.content .tagline {
+  margin: 0 0 2.2rem;
+  font-size: 1.2rem;
+  color: var(--dim);
+}
+
+.content h2 {
+  margin-top: 2.4rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: .4rem;
+}
+
+.content ul { padding-left: 1.3rem; }
+.content li { margin: .35rem 0; }
+
+.content code {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: .1em .35em;
+  font-size: .92em;
+}
+
+.footer {
+  padding: 2rem 1.25rem 3rem;
+  color: var(--dim);
+  font-size: .9rem;
+  border-top: 1px solid var(--border);
+}
+
+.footer .sep { margin: 0 .5rem; }

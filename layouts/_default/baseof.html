@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.LanguageCode | default .Site.Language.Lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ .Params.tagline | default .Site.Params.tagline }}">
+  {{ range .Site.Home.AllTranslations }}
+  <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+  {{ end }}
+  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  {{ block "main" . }}{{ end }}
+</body>
+</html>
