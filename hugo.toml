@@ -1,49 +1,96 @@
 baseURL = 'https://signal2sip.github.io/'
 title = 'signal2sip'
-defaultContentLanguage = 'en'
-defaultContentLanguageInSubdir = true
+theme = 'hextra'
 enableRobotsTXT = true
+enableGitInfo = false
+hasCJKLanguage = false
 
-[pagination]
-  pagerSize = 10
+defaultContentLanguage = 'en'
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+  [markup.goldmark.renderer]
+    unsafe = true
 
 [languages]
   [languages.en]
-    languageName = 'English'
+    label = 'English'
     weight = 1
-    contentDir = 'content/en'
+    title = 'signal2sip'
   [languages.uk]
-    languageName = 'Українська'
+    label = 'Українська'
     weight = 2
-    contentDir = 'content/uk'
+    title = 'signal2sip'
   [languages.ru]
-    languageName = 'Русский'
+    label = 'Русский'
     weight = 3
-    contentDir = 'content/ru'
+    title = 'signal2sip'
   [languages.pl]
-    languageName = 'Polski'
+    label = 'Polski'
     weight = 4
-    contentDir = 'content/pl'
+    title = 'signal2sip'
   [languages.de]
-    languageName = 'Deutsch'
+    label = 'Deutsch'
     weight = 5
-    contentDir = 'content/de'
+    title = 'signal2sip'
   [languages.fr]
-    languageName = 'Français'
+    label = 'Français'
     weight = 6
-    contentDir = 'content/fr'
+    title = 'signal2sip'
   [languages.it]
-    languageName = 'Italiano'
+    label = 'Italiano'
     weight = 7
-    contentDir = 'content/it'
+    title = 'signal2sip'
   [languages.es]
-    languageName = 'Español'
+    label = 'Español'
     weight = 8
-    contentDir = 'content/es'
+    title = 'signal2sip'
   [languages.pt]
-    languageName = 'Português'
+    label = 'Português'
     weight = 9
-    contentDir = 'content/pt'
+    title = 'signal2sip'
 
 [params]
-  github = 'https://github.com/signal2sip/signal2sip'
+  description = "Bridge Signal calls to your own SIP/PBX infrastructure."
+
+  [params.theme]
+    default = 'system'
+    displayToggle = true
+
+  [params.navbar]
+    displayTitle = true
+    displayLogo = true
+    [params.navbar.logo]
+      path = "images/logo.svg"
+      width = "28"
+      height = "28"
+
+  [params.footer]
+    enable = true
+    displayCopyright = false
+    displayPoweredBy = false
+
+[[menu.main]]
+  name = "Documentation"
+  pageRef = "/docs"
+  weight = 0
+
+[[menu.main]]
+  name = "Theme"
+  weight = 1
+  [menu.main.params]
+    type = "theme-toggle"
+
+[[menu.main]]
+  name = "Language"
+  weight = 2
+  [menu.main.params]
+    type = "language-switch"
+
+[[menu.main]]
+  name = "GitHub"
+  url = "https://github.com/signal2sip/signal2sip"
+  weight = 3
+  [menu.main.params]
+    icon = "github"

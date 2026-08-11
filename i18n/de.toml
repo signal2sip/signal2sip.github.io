@@ -1,2 +1,1 @@
-view_on_github = "Auf GitHub ansehen"
-license_notice = "Lizenziert unter AGPL-3.0"
+signal_disclaimer = '''signal2sip steht in keiner Verbindung zu <a href="https://signal.org/" target="_blank" rel="noopener noreferrer" class="hx:underline hx:decoration-dotted hx:hover:text-gray-700 hx:dark:hover:text-gray-300">Signal Messenger, LLC</a> oder der <a href="https://signalfoundation.org/" target="_blank" rel="noopener noreferrer" class="hx:underline hx:decoration-dotted hx:hover:text-gray-700 hx:dark:hover:text-gray-300">Signal Technology Foundation</a> und wird von diesen weder unterstützt noch gesponsert.'''

@@ -1,0 +1,32 @@
+{{/*
+  One-time browser-locale redirect, English homepage only ("/", the
+  default language with no URL prefix - see hugo.toml's
+  defaultContentLanguage). Redirects a first-time visitor to a
+  supported non-English language matching their browser's preferred
+  language, then never again (gated on localStorage) - so it doesn't
+  fight a visitor who explicitly picks/keeps English afterwards, and
+  doesn't re-fire on every visit. Only touches this one page: visitors
+  who land directly on /ru/, /de/, etc. (shared links, search results)
+  are never redirected.
+*/}}
+{{ if and .IsHome (eq .Language.Lang "en") }}
+<script>
+(function () {
+  try {
+    if (localStorage.getItem('s2s-locale-redirected')) return;
+    var supported = ['uk', 'ru', 'pl', 'de', 'fr', 'it', 'es', 'pt'];
+    var prefs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
+    for (var i = 0; i < prefs.length; i++) {
+      var code = (prefs[i] || '').slice(0, 2).toLowerCase();
+      if (code === 'en') break; // English is preferred over any supported language below it
+      if (supported.indexOf(code) !== -1) {
+        localStorage.setItem('s2s-locale-redirected', '1');
+        location.replace('/' + code + '/');
+        return;
+      }
+    }
+    localStorage.setItem('s2s-locale-redirected', '1');
+  } catch (e) { /* localStorage blocked (private mode, etc) - just skip */ }
+})();
+</script>
+{{ end }}

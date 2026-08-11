@@ -1,0 +1,12 @@
+{{- /*
+  Renders the "not affiliated with Signal" disclaimer (i18n key
+  signal_disclaimer) inline in page content. Also lives in the real
+  footer (layouts/_partials/custom/footer.html) but the footer itself
+  sits far enough below the fold on this short landing page that it's
+  effectively unreachable for most visitors - this shortcode lets the
+  same required text also appear in the normal content flow, right
+  below the feature grid, where it's actually seen.
+*/ -}}
+<div class="hx:mt-6 hx:mb-12 hx:text-sm hx:text-gray-500 hx:dark:text-gray-400">
+  {{ T "signal_disclaimer" | safeHTML }}
+</div>

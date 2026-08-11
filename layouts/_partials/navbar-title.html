@@ -1,0 +1,46 @@
+{{- /*
+  Site override of Hextra's navbar-title.html (same path under
+  layouts/_partials/ - Hugo's normal theme-customization mechanism) -
+  identical to the theme's own version, just rendering the title span's
+  text through strings.ToUpper so "signal2sip" reads as SIGNAL2SIP in
+  the header, without changing the actual Site.Title used in
+  <title>/meta tags (those should stay properly cased for SEO). A CSS
+  `uppercase` utility class was tried first instead, but this site
+  doesn't generate hugo_stats.json (see themes/hextra/CLAUDE.md's CSS
+  workflow section) so Tailwind's tree-shaken build never included a
+  rule for it - literal-uppercasing the text sidesteps that entirely.
+*/ -}}
+{{- $logoPath := .Site.Params.navbar.logo.path | default "images/logo.svg" -}}
+{{- $logoLink := .Site.Params.navbar.logo.link | default .Site.Home.RelPermalink -}}
+{{- $logoWidth := .Site.Params.navbar.logo.width | default "20" -}}
+{{- $logoHeight := .Site.Params.navbar.logo.height | default "20" -}}
+{{- $logoDarkPath := .Site.Params.navbar.logo.dark | default $logoPath -}}
+
+{{- /*
+  Responsive logo size (grows on wider viewports, shrinks on narrow
+  ones) via plain CSS media queries rather than Tailwind breakpoint
+  classes - this site's Tailwind build doesn't scan our own
+  layouts/_partials overrides (see the uppercase note above), so any
+  new utility class added here would silently produce no rule. Plain
+  CSS sidesteps that. $logoWidth/$logoHeight above still set the base
+  (mobile) size and the <img> attributes, so layout doesn't shift
+  before this stylesheet applies.
+*/ -}}
+<style>
+  .s2s-logo { height: {{ $logoHeight }}px; width: {{ $logoWidth }}px; }
+  @media (min-width: 640px)  { .s2s-logo { height: 32px; width: 32px; } }
+  @media (min-width: 768px)  { .s2s-logo { height: 36px; width: 36px; } }
+  @media (min-width: 1024px) { .s2s-logo { height: 40px; width: 40px; } }
+  @media (min-width: 1280px) { .s2s-logo { height: 44px; width: 44px; } }
+</style>
+
+<a class="hx:flex hx:items-center hx:hover:opacity-75 hx:ltr:mr-auto hx:rtl:ml-auto" href="{{ $logoLink }}">
+  {{- $displayTitle := (.Site.Params.navbar.displayTitle | default true) }}
+  {{- if (.Site.Params.navbar.displayLogo | default true) }}
+    <img class="s2s-logo hx:mr-2 hx:block hx:dark:hidden" src="{{ $logoPath | relURL }}" alt="{{ cond $displayTitle `Logo` .Site.Title }}" height="{{ $logoHeight }}" width="{{ $logoWidth }}" />
+    <img class="s2s-logo hx:mr-2 hx:hidden hx:dark:block" src="{{ $logoDarkPath | relURL }}" alt="{{ cond $displayTitle `Dark Logo` .Site.Title }}" height="{{ $logoHeight }}" width="{{ $logoWidth }}" />
+  {{- end }}
+  {{- if $displayTitle }}
+    <span class="hx:mr-2 hx:font-extrabold hx:inline hx:select-none">{{- strings.ToUpper .Site.Title -}}</span>
+  {{- end }}
+</a>

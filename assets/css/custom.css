@@ -1,0 +1,18 @@
+/* Fluid typography for the hero section - Hextra's hero-headline/
+   hero-subtitle shortcodes use fixed Tailwind sizes (text-4xl/md:text-5xl,
+   text-xl) that don't shrink further below the md breakpoint, so on a
+   narrow phone (e.g. 360px wide) a two-line headline at 36px+bold reads
+   as oversized relative to the screen. clamp() scales smoothly with
+   viewport width instead of jumping at fixed breakpoints - shrinks down
+   further on small screens, still caps at the original desktop size.
+   !important because Tailwind's own utility classes (hx:text-4xl etc.)
+   have equal class-selector specificity and this file loads after them,
+   but ties should not be left to source-order luck. */
+h1.hx\:text-4xl {
+  font-size: clamp(1.5rem, 4.5vw + 0.6rem, 2.6rem) !important;
+  font-weight: 600 !important;
+}
+
+p.hx\:text-xl {
+  font-size: clamp(1rem, 2.2vw + 0.7rem, 1.25rem) !important;
+}
