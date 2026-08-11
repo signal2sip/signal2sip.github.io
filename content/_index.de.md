@@ -65,4 +65,8 @@ layout: hextra-home
   >}}
 {{< /hextra/feature-grid >}}
 
+{{< callout type="info" >}}
+  🧪 **Teststatus**: signal2sip wurde live an echter TK-Anlagen-Hardware getestet, in mehreren Konfigurationen und Anrufszenarien - hat aber noch keine breite, unabhängige Erprobung erfahren. Haben Sie einen Fehler gefunden, oder hat alles gut funktioniert? Rückmeldungen sind willkommen - eröffnen Sie ein [Issue oder einen PR](https://github.com/signal2sip/signal2sip) auf GitHub, oder schreiben Sie uns einfach eine E-Mail.
+{{< /callout >}}
+
 {{< disclaimer >}}

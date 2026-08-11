@@ -65,4 +65,8 @@ layout: hextra-home
   >}}
 {{< /hextra/feature-grid >}}
 
+{{< callout type="info" >}}
+  🧪 **État des tests** : signal2sip a été testé en conditions réelles sur du matériel PBX, dans plusieurs configurations et scénarios d'appel - mais n'a pas encore fait l'objet de tests indépendants à grande échelle. Vous avez trouvé un bug, ou tout a bien fonctionné ? Vos retours sont les bienvenus - ouvrez une [issue ou une PR](https://github.com/signal2sip/signal2sip) sur GitHub, ou écrivez-nous simplement par e-mail.
+{{< /callout >}}
+
 {{< disclaimer >}}
