@@ -1,1 +1,5 @@
 signal_disclaimer = '''signal2sip no está afiliado, respaldado ni patrocinado por <a href="https://signal.org/" target="_blank" rel="noopener noreferrer" class="hx:underline hx:decoration-dotted hx:hover:text-gray-700 hx:dark:hover:text-gray-300">Signal Messenger, LLC</a> ni por <a href="https://signalfoundation.org/" target="_blank" rel="noopener noreferrer" class="hx:underline hx:decoration-dotted hx:hover:text-gray-700 hx:dark:hover:text-gray-300">Signal Technology Foundation</a>.'''
+
+contact = 'Contacto'
+
+disclaimer_label = 'Aviso legal'

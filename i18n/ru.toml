@@ -1,1 +1,5 @@
 signal_disclaimer = '''signal2sip не аффилирован, не одобрен и не спонсируется <a href="https://signal.org/" target="_blank" rel="noopener noreferrer" class="hx:underline hx:decoration-dotted hx:hover:text-gray-700 hx:dark:hover:text-gray-300">Signal Messenger, LLC</a> или <a href="https://signalfoundation.org/" target="_blank" rel="noopener noreferrer" class="hx:underline hx:decoration-dotted hx:hover:text-gray-700 hx:dark:hover:text-gray-300">Signal Technology Foundation</a>.'''
+
+contact = 'Контакт'
+
+disclaimer_label = 'Дисклеймер'

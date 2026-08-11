@@ -7,6 +7,9 @@
   same required text also appear in the normal content flow, right
   below the feature grid, where it's actually seen.
 */ -}}
-<div class="hx:mt-6 hx:mb-12 hx:text-sm hx:text-gray-500 hx:dark:text-gray-400">
-  {{ T "signal_disclaimer" | safeHTML }}
+<div class="hx:mt-6 hx:mb-2 hx:text-sm hx:text-gray-500 hx:dark:text-gray-400">
+  {{ T "disclaimer_label" }}: {{ T "signal_disclaimer" | safeHTML }}
+</div>
+<div class="hx:mb-12 hx:text-sm hx:text-gray-500 hx:dark:text-gray-400">
+  {{ T "contact" }}: <a href="mailto:signal2sip@gmail.com" class="hx:underline hx:decoration-dotted hx:hover:text-gray-700 hx:dark:hover:text-gray-300">signal2sip@gmail.com</a>
 </div>
