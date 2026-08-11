@@ -33,6 +33,37 @@ working unchanged.
   extension and it places a real outgoing Signal call, resolving the
   dialed number via Signal's own Contact Discovery.
 
+## Codec: your PBX endpoint must allow L16/48000 (slin48)
+
+{{< callout type="warning" emoji="⚠️" >}}
+  signal2sip offers **only one codec** on the SIP leg - if your PBX
+  endpoint doesn't allow it, call setup fails outright (SDP `m=audio 0`,
+  PBX responds `488 Not Acceptable Here`).
+{{< /callout >}}
+
+signal2sip's internal audio bridge moves raw, uncompressed audio between
+RingRTC and PJSIP with no transcoding step at all - by design, to avoid
+the CPU cost and quality loss of encoding/decoding on every packet. That
+only works if PJSIP negotiates the *exact* format the bridge already
+uses internally, so the daemon deliberately offers a single codec on
+every SIP call: **L16/48000/1** (16-bit linear PCM, 48kHz, mono) - every
+other codec PJSIP knows about (G.711, G.722, Opus, GSM, ...) is
+explicitly disabled, not just deprioritized.
+
+**What this means for your PBX config**: the endpoint/trunk signal2sip
+registers against must have this codec allowed, or the call never gets
+media at all. In Asterisk/FreePBX (`chan_pjsip`), this codec is called
+**`slin48`** - make sure it's in the endpoint's allowed codec list, e.g.:
+
+```ini
+[signal2sip-trunk]
+allow=!all,slin48
+```
+
+If a call's SIP signaling looks fine (registration succeeds, INVITE
+goes out) but audio never comes up and the PBX rejects with `488`,
+this codec mismatch is the first thing to check.
+
 ## Caller ID on your phones
 
 When a Signal call comes in and gets bridged out to the PBX, signal2sip

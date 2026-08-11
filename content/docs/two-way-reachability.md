@@ -49,3 +49,26 @@ in-call UI Signal doesn't have.
 Ending the call on either side - Signal or the PBX - ends it on the
 other side too, instead of leaving a dangling half-connected call on
 one leg.
+
+## Connection health: Signal is the source of truth, not the PBX
+
+The dependency between the two sides is deliberately one-directional:
+
+- **If the Signal connection drops**, the daemon immediately takes that
+  account's SIP registration down too - an honest "Unregistered" beats a
+  stale "Registered" that nothing can actually route to. It keeps
+  retrying the Signal connection in the background, and restores the SIP
+  registration automatically the moment it reconnects.
+- **If the SIP/PBX side becomes unreachable** (PBX restart, network
+  blip), the daemon does *not* touch the Signal connection - the account
+  stays online and reachable on Signal regardless, while a separate,
+  independent watchdog keeps retrying SIP registration on its own until
+  the PBX is reachable again.
+
+The asymmetry is intentional: a dead Signal connection means the account
+can't do anything useful at all (no call in either direction is possible
+without it), so tying SIP's state to it avoids ever presenting a
+falsely-healthy registration. A dead PBX, on the other hand, is just one
+account's outbound leg being temporarily unavailable - it shouldn't take
+down an otherwise-healthy Signal connection that may still be handling
+messages or other accounts' calls.
