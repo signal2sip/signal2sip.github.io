@@ -30,19 +30,15 @@ between phone numbers and Signal identities is needed.
 
 ## DTMF (dialing digits into an IVR)
 
-{{< callout type="info" emoji="🚧" >}}
-  **In development.** A Signal caller landing on a PBX IVR or a
-  digit-driven menu can't yet send touch-tones into it - this is planned,
-  not shipped.
-{{< /callout >}}
-
-Signal's own apps have no in-call dialpad, so the plan is the same
-pattern already proven in this project's sibling bridge for Telegram
-([tg2sip-webrtc](https://github.com/vladonv/tg2sip-webrtc)), which hits
-the identical limitation there: while a call is up, sending digits as a
-plain text message in the same conversation gets picked up and relayed
-as a real SIP DTMF event (RFC 2833) into the call, without needing any
-in-call UI Signal doesn't have.
+Signal's own apps have no in-call dialpad at all, so signal2sip uses the
+same pattern already proven in this project's sibling bridge for
+Telegram ([tg2sip-webrtc](https://github.com/vladonv/tg2sip-webrtc)),
+which hits the identical limitation there: while a call with someone is
+up, send digits as a plain text message in that same conversation - it
+gets picked up and relayed as a real SIP DTMF event (RFC 2833) into the
+bridged call, without needing any in-call UI Signal doesn't have. Any
+combination of `0-9`, `*`, `#`, and `A-D` (case-insensitive) works, up to
+32 characters per message.
 
 ## Hangup propagates both ways
 
