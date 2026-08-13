@@ -52,7 +52,7 @@ defaultContentLanguage = 'en'
     title = 'signal2sip'
 
 [params]
-  description = "Bridge Signal calls to your own SIP/PBX infrastructure."
+  description = "Bridge Signal messenger calls to your own SIP/PBX infrastructure."
 
   [params.theme]
     default = 'system'

@@ -10,7 +10,7 @@ layout: hextra-home
 
 <div class="hx:mt-6 hx:mb-6">
 {{< hextra/hero-headline >}}
-  Зв'язує дзвінки Signal&nbsp;<br class="hx:sm:block hx:hidden" />з вашою SIP/АТС
+  Зв'язує дзвінки месенджера Signal&nbsp;<br class="hx:sm:block hx:hidden" />з вашою SIP/АТС
 {{< /hextra/hero-headline >}}
 </div>
 

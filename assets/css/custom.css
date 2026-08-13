@@ -4,15 +4,51 @@
    narrow phone (e.g. 360px wide) a two-line headline at 36px+bold reads
    as oversized relative to the screen. clamp() scales smoothly with
    viewport width instead of jumping at fixed breakpoints - shrinks down
-   further on small screens, still caps at the original desktop size.
+   further on small screens, still caps at the original desktop size
+   (scaled down ~15% again on 2026-08-13, per Vlad's request).
    !important because Tailwind's own utility classes (hx:text-4xl etc.)
    have equal class-selector specificity and this file loads after them,
    but ties should not be left to source-order luck. */
 h1.hx\:text-4xl {
-  font-size: clamp(1.5rem, 4.5vw + 0.6rem, 2.6rem) !important;
+  font-size: clamp(1.28rem, 3.83vw + 0.51rem, 2.21rem) !important;
   font-weight: 600 !important;
 }
 
 p.hx\:text-xl {
   font-size: clamp(1rem, 2.2vw + 0.7rem, 1.25rem) !important;
+}
+
+/* Hero "View on GitHub" button - same hextra/hero-button shortcode call
+   on every language's _index.*.md, so overriding the shared
+   hx:bg-primary-600 class here (rather than each file's own inline
+   style) keeps the branded color consistent across all 9 locales in one
+   place. No other button on the site uses this shortcode. */
+a.hx\:bg-primary-600 {
+  background-color: #3b45fd !important;
+}
+
+/* Tighten the hero block's vertical spacing (badge/headline/subtitle/
+   button) - per Vlad's request, it read as too tall. Targets the exact
+   div-wrapper class combos hardcoded in every _index.*.md's hero
+   section (mt-6+mb-6 around the headline, mb-12 alone around the
+   subtitle, mb-6 alone around the button, mt-6 alone as a trailing
+   spacer) - scoped under #content since these combos aren't reused
+   anywhere else in the site's content, verified via grep before
+   relying on that uniqueness. Plain CSS, not a new Tailwind class -
+   same reason as the font-size override above. */
+#content div.hx\:mt-6.hx\:mb-6 {
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+#content div.hx\:mb-12 {
+  margin-bottom: 1.25rem !important;
+}
+
+#content div.hx\:mb-6:not(.hx\:mt-6) {
+  margin-bottom: 1rem !important;
+}
+
+#content div.hx\:mt-6:not(.hx\:mb-6) {
+  margin-top: 0.75rem !important;
 }

@@ -10,7 +10,7 @@ layout: hextra-home
 
 <div class="hx:mt-6 hx:mb-6">
 {{< hextra/hero-headline >}}
-  Conecta las llamadas de Signal&nbsp;<br class="hx:sm:block hx:hidden" />con tu propio PBX SIP
+  Conecta las llamadas del mensajero Signal&nbsp;<br class="hx:sm:block hx:hidden" />con tu propio PBX SIP
 {{< /hextra/hero-headline >}}
 </div>
 

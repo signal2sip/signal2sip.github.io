@@ -10,7 +10,7 @@ layout: hextra-home
 
 <div class="hx:mt-6 hx:mb-6">
 {{< hextra/hero-headline >}}
-  Verbindet Signal-Anrufe&nbsp;<br class="hx:sm:block hx:hidden" />mit Ihrer eigenen SIP/TK-Anlage
+  Verbindet Signal-Messenger-Anrufe&nbsp;<br class="hx:sm:block hx:hidden" />mit Ihrer eigenen SIP/TK-Anlage
 {{< /hextra/hero-headline >}}
 </div>
 

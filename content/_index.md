@@ -10,7 +10,7 @@ layout: hextra-home
 
 <div class="hx:mt-6 hx:mb-6">
 {{< hextra/hero-headline >}}
-  Bridge Signal calls&nbsp;<br class="hx:sm:block hx:hidden" />to your own SIP/PBX
+  Bridge Signal messenger calls&nbsp;<br class="hx:sm:block hx:hidden" />to your own SIP/PBX
 {{< /hextra/hero-headline >}}
 </div>
 

@@ -10,7 +10,7 @@ layout: hextra-home
 
 <div class="hx:mt-6 hx:mb-6">
 {{< hextra/hero-headline >}}
-  Relie les appels Signal&nbsp;<br class="hx:sm:block hx:hidden" />à votre propre PBX SIP
+  Relie les appels de la messagerie Signal&nbsp;<br class="hx:sm:block hx:hidden" />à votre propre PBX SIP
 {{< /hextra/hero-headline >}}
 </div>
 
