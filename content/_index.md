@@ -63,6 +63,12 @@ layout: hextra-home
     subtitle="A terminal UI or a plain CLI - no daemon restart needed for config changes."
     icon="terminal"
   >}}
+  {{< hextra/feature-card
+    title="Proxy support"
+    link="/docs/proxy"
+    subtitle="Route any account through a transparent TLS relay to reach Signal from a network where it's blocked, same as the official app's proxy feature."
+    icon="globe-alt"
+  >}}
 {{< /hextra/feature-grid >}}
 
 {{< callout type="info" >}}

@@ -63,6 +63,12 @@ layout: hextra-home
     subtitle="Термінальний інтерфейс або звичайний CLI - без перезапуску демона для зміни конфігурації."
     icon="terminal"
   >}}
+  {{< hextra/feature-card
+    title="Підтримка проксі"
+    link="/docs/proxy"
+    subtitle="Спрямуйте будь-який акаунт через прозорий TLS-ретранслятор, щоб дістатись Signal з мережі, де він заблокований - так само, як проксі-функція офіційного застосунку."
+    icon="globe-alt"
+  >}}
 {{< /hextra/feature-grid >}}
 
 {{< callout type="info" >}}
