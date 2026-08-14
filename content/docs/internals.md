@@ -127,7 +127,7 @@ reversible:
 | `register --e164 <e164> sms\|voice` | - | creates the account row | starts a real SMS/voice-verified registration session (Flow A) |
 | `verify <code>` | - | fills in the account's real identity (ACI/PNI/keys) | completes registration |
 | `link` | - | creates the account row | links as a secondary device via QR code (Flow B) |
-| `unregister` | **Yes** (`reactivate`) | untouched | flips `fetchesMessages=false` - senders can't reach this number, nothing else changes |
+| `deactivate` (alias: `unregister`) | **Yes** (`reactivate`) | untouched | flips `fetchesMessages=false` - senders can't reach this number, nothing else changes |
 | `reactivate` | - | untouched | flips `fetchesMessages=true` back |
 | `enable` / `disable` | **Yes** (the other one) | flips the row's `enabled` flag only | untouched - a disabled account is simply not loaded by the daemon |
 | `unlink` | **No** | **wipes this account's row entirely** | untouched - the real Signal account (and its phone number) is completely unaffected |
@@ -135,10 +135,11 @@ reversible:
 
 Two things worth calling out explicitly:
 
-- **`unregister` is the safe, reversible one** - a pure server-side flag
+- **`deactivate` is the safe, reversible one** - a pure server-side flag
   flip, no local data is ever touched, and `reactivate` undoes it
   completely. `unlink` and `delete-account` are the commands that
-  actually remove local data.
+  actually remove local data. The old name `unregister` still works as
+  an alias.
 - **`delete-account`'s server response can be genuinely ambiguous.**
   Signal's own protocol documents this endpoint as sometimes completing
   via a WebSocket close (code `4401`) instead of a normal HTTP response -

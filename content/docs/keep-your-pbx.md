@@ -177,7 +177,7 @@ account's settings with `signal2sip-gendb <name> config set <field>
 live (SIGHUP or a periodic poll), no restart needed. See [Manage it
 live](../live-management).
 
-This per-account database row isn't touched by a soft `unregister` (a
+This per-account database row isn't touched by a soft `deactivate` (a
 reversible, server-side-only flag flip - all local data stays put,
 `reactivate` undoes it) - only `unlink` (wipes this account's local row,
 leaves the real Signal account untouched) or a successful
