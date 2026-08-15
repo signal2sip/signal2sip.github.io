@@ -37,6 +37,7 @@ process-wide settings. Everything else lives in the SQLCipher database
 | `resolved_contact_ttl_sec` | 86400 (1 day) | How long a cached e164→ACI/PNI resolution (from a real Contact Discovery lookup) is trusted before re-resolving. |
 | `storage_sync_interval_sec` | 43200 (12h) | How often a linked account (one with real Signal contact-sync access) re-fetches its contact list from Signal's StorageService. |
 | `config_poll_interval_sec` | 30 | How often the daemon re-reads every account's config from the database as a fallback, independent of SIGHUP (see below). |
+| `on_account_error_cmd` | *(empty = disabled)* | Optional shell command run when an account hits a known, unrecoverable-without-admin-action problem (today: Signal rejecting this device's credentials) or recovers from one - see [Signal PIN & Registration Lock](../signal-pin) for why this can happen even without a SIP-side problem. |
 
 Everything else - `sip_host`, `sip_extension`, `sip_password`,
 `sip_transport`, `sip_srtp`, `sip_bridge_destination`/`sip_bridge_did`,
@@ -149,6 +150,48 @@ Two things worth calling out explicitly:
   deliberately left untouched** rather than guessing - verify manually
   (e.g. try registering the same e164 fresh elsewhere) before running
   `unlink` yourself to clear the local row.
+
+## Signaling account problems to the admin
+
+Unlike a plain SIP registration drop (which the daemon just retries on
+its own, purely from memory), some Signal-side failures can't be
+recovered without a human: today that means
+`AuthSocket::isDeauthorized()` firing (the account was unlinked/deleted
+elsewhere, or - once Registration Lock support exists, see [Signal PIN &
+Registration Lock](../signal-pin) - a takeover attempt was correctly
+rejected for lack of the right PIN, which also freezes the real owner's
+own credentials as a side effect). The daemon gives up retrying that
+specific account and needs `signal2sip-gendb <name> link` (or `unlink`
+then `link`) followed by a restart.
+
+Three independent, complementary ways this reaches an admin:
+
+1. **`account.last_error`/`last_error_at`** - written to the database the
+   moment this happens, cleared automatically the next time the account
+   connects successfully (always after a restart, since the daemon stops
+   retrying in-process). Visible via `signal2sip-gendb list` (shown as an
+   `ERROR (since ...)` suffix) and the TUI's account list (red "problem"
+   status) - both were previously blind to this, since it only ever
+   existed in the running daemon's own memory before.
+2. **A `journalctl -p err`-visible log line** - the daemon's own stderr
+   message is tagged with systemd's `<3>` (LOG_ERR) syslog-level prefix,
+   so it's greppable/alertable via journald without any extra
+   configuration (the packaged systemd unit already sends stderr to the
+   journal).
+3. **`on_account_error_cmd`** (see the config table above) - an optional
+   shell hook for wiring this into whatever notification channel you
+   actually want (email, a Telegram/ntfy.sh bot, a Slack webhook -
+   signal2sip deliberately doesn't pick one for you). Called as
+   `/bin/sh -c '<your command>' sh <account-name> <e164> <error-type>` -
+   the three values arrive as `$1`/`$2`/`$3` inside your command, e.g.:
+
+   ```
+   on_account_error_cmd=curl -s -d "signal2sip: $1 ($2) is $3" ntfy.sh/your-topic
+   ```
+
+   `<error-type>` is currently `deauthorized` or `recovered`. Fire-and-
+   forget - the daemon never waits on it or checks its exit code, so a
+   slow or hanging script can't stall any other account's handling.
 
 {{< callout type="info" emoji="🚧" >}}
   **Planned, not yet implemented**: startup hardening for both

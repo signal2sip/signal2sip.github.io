@@ -63,6 +63,48 @@ protected *by* the SVR2 secret - for Registration Lock specifically,
 that's just the lock itself, not message history (which isn't stored
 there).
 
+## What the legitimate owner actually experiences
+
+It's tempting to assume Registration Lock means "the real owner's
+session is untouched while the attacker gets stuck." That's not quite
+right, and it's worth being upfront about the trade-off: when someone
+verifies the phone number correctly (a real SMS/call code) but fails
+the PIN check, the server freezes **every device on the existing
+account** - including the real owner's own phone, which did nothing
+wrong. Their app starts failing to send or receive until they respond.
+
+The value isn't that the owner is shielded from disruption - it's
+*what the attacker is denied* versus *how cheaply the owner recovers*:
+
+| | Without Registration Lock | With Registration Lock |
+|---|---|---|
+| Attacker who obtains the number | Immediate full takeover - new identity keys issued, every real device disconnected for good | Stuck - phone number alone no longer completes registration, nothing to do but wait out the freeze window with no local account data of their own |
+| Real owner | Loses the account entirely, no recourse | Brief, self-service interruption - same device, same local message history, unlock by entering the PIN they already know |
+
+The real owner's recovery path is deliberately cheap: it's a
+same-device re-registration (Signal-Android's own PIN re-entry screen
+is literally titled "Enter the PIN you created for your account") -
+no reinstall, no data loss. And because the app visibly stops working
+rather than failing silently, it doubles as a forcing function to
+notice something happened within the 7-day window, even though nothing
+in the UI explicitly says "someone tried to take over your account" -
+see the note on notification wording below.
+
+## Does the owner get told someone tried?
+
+Not explicitly. The server does send a push
+(`ATTEMPT_LOGIN_NOTIFICATION_HIGH_PRIORITY`) to every device on a
+failed attempt, but its payload carries no distinguishing text -
+Android and iOS both treat it identically to an ordinary
+incoming-message push. The actual signal is indirect: that push wakes
+the app, which then tries to reconnect with the credentials the server
+just froze, gets rejected, and shows the same generic "deregistered"
+banner ("this is likely because you registered your phone number with
+Signal on a different device") that a real self-reregistration
+elsewhere would also produce. There's no way to tell from the UI alone
+whether this was an attack or the owner's own action on another
+device - only the server itself knows which.
+
 {{< callout type="info" emoji="🚧" >}}
   **Planned, not yet implemented.** signal2sip has researched the full
   protocol and the libsignal-ffi calls needed (the same
