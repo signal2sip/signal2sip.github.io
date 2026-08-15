@@ -30,6 +30,27 @@ config editor, with inline validation (e.g. a TLS transport requires
 either a pinned CA certificate or an explicit insecure opt-in before it
 lets you save) and confirmation prompts before anything destructive.
 
+The account detail card also surfaces any known problem
+(`account.last_error`, written by the running daemon - see
+[Internals](../internals) for the full mechanism) directly, not just as
+a red dot in the list.
+
+Every lifecycle action from `gendb` is reachable from the card too,
+each with a confirmation dialog spelling out the real consequence
+before it runs:
+
+- `enable`/`disable`, `deactivate` - plain yes/no confirm, all fully
+  reversible.
+- `unlink` - the same one-way local action `gendb <name> unlink` is
+  (see [Internals](../internals)'s lifecycle table), so it gets the
+  strict type-the-account-name confirm, same as `delete-account`. The
+  card labels it **"unlink"** for a linked (Flow B) account and
+  **"reset"** for a standalone/primary one - the underlying command is
+  identical either way, but "unlink" reads as nonsensical for an
+  account that was never linked to a real device in the first place.
+- `delete-account` - same strict confirm, clearly marked as the one
+  irreversible action that touches Signal's real servers.
+
 ## Changes apply live
 
 Once the daemon is running, it picks up configuration changes two ways,
