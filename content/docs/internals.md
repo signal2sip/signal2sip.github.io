@@ -193,10 +193,34 @@ Three independent, complementary ways this reaches an admin:
    forget - the daemon never waits on it or checks its exit code, so a
    slow or hanging script can't stall any other account's handling.
 
-{{< callout type="info" emoji="🚧" >}}
-  **Planned, not yet implemented**: startup hardening for both
-  `signal2sip-daemon` and `signal2sip-gendb` - refusing to start at all
-  when run as `root`, and verifying the config file and database are
-  owned by the running user with the config file at exactly `0600`
-  before opening either. Neither binary checks this today.
+## Startup privilege and permission checks
+
+`signal2sip-daemon`, `signal2sip-gendb`, and `signal2sip-tui` all refuse
+to start rather than run with more access than they need:
+
+- **As `root`** - an explicit, loud error, not a silent privilege drop.
+  There's no reason any of these need root: outbound network only, no
+  privileged ports, no reason to trust a process handling real Signal
+  keys with more access than the rest of the system.
+- **Config file owned by someone else, or not exactly `0600`** - it
+  holds the SQLCipher database passphrase in plain text, so anything
+  looser than owner-only read/write is refused outright, with the exact
+  fix (`chmod 600 <path>`) in the error message.
+- **Database file owned by someone else** - same ownership check, no
+  specific mode requirement (it's already encrypted at rest, so a
+  group-readable ciphertext file is a real, supportable choice for some
+  deployments - only ownership actually matters here).
+
+Both checks run before the file's contents are ever read, and apply the
+same way whether the file already existed or is about to be created for
+the first time (a fresh `gendb register`/`link` on a brand-new
+deployment writes its own bootstrapped config at `0600` from the start).
+
+{{< callout type="info" emoji="✅" >}}
+  **Verified live**: tested against a real deployment - a
+  dedicated non-root `signal2sip` system user runs the daemon via its
+  own systemd unit, and every wrong-owner/wrong-mode combination
+  (root-owned config, `0644` instead of `0600`, root-owned database)
+  was confirmed to be refused with the specific, actionable error above
+  before falling back to the correct setup.
 {{< /callout >}}
